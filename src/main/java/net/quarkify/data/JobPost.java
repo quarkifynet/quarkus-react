@@ -11,8 +11,4 @@ import java.util.List;
 public class JobPost extends PanacheEntity {
     public String title;
     public String description;
-    @ManyToOne
-    public User user;
-    @OneToMany
-    public List<JobProposal> proposals;
 }

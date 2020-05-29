@@ -1,6 +1,8 @@
 package net.quarkify.posts;
 
 import net.quarkify.data.*;
+
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -15,6 +17,7 @@ public class JobPostResource {
     }
 
     @POST
+    @Transactional
     public JobPost submit(JobPost post) {
         post.persistAndFlush();
         return post;
@@ -28,13 +31,12 @@ public class JobPostResource {
 
     @POST
     @Path("/{id}/proposals")
+    @Transactional
     public JobProposal submitProposal(@PathParam("id") Long id, JobProposal jobProposal) {
         JobPost jobPost = JobPost.findById(id);
         jobProposal.persistAndFlush();
-        jobPost.proposals.add(jobProposal);
-        jobPost.persistAndFlush();
+        jobProposal.jobPost = jobPost;
         return jobProposal;
     }
-
 
 }

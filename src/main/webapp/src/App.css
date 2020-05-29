@@ -18,10 +18,22 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: start;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.job-container {
+  margin: 5vh;
+  margin-bottom: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.job-desc {
+  font-size: calc(10px);
 }
 
 .App-link {
