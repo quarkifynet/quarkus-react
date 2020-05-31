@@ -1,6 +1,7 @@
 package net.quarkify.posts;
 
 import net.quarkify.data.*;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class JobPostResource {
     @GET
+    @Operation(operationId = "getPosts")
     public List<JobPost> getAll() {
         return JobPost.findAll().list();
     }
@@ -25,6 +27,7 @@ public class JobPostResource {
 
     @GET
     @Path("/{id}/proposals")
+    @Operation(operationId = "getJobProposals")
     public List<JobProposal> getAllProposals(@PathParam("id") Long id) {
         return JobProposal.find("job_post_id", id).list();
     }

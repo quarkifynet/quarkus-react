@@ -6,20 +6,23 @@ import Job from "./Job";
 function App() {
   const [jobs, setJobs] = useState(null);
   const [newJobContent, setNewJobContent] = useState("");
-  useEffect(() => {
+  const loadJobs = () => {
     Networking.exec({
-      endpoint: client => client.apis.default.get_posts,
+      endpoint: client => client.apis.default.getPosts,
       success: result => {
         setJobs(result.body)
       }
     })
+  }
+  useEffect(() => {
+    loadJobs()
   }, [])
 
   const submitNewJob = () => {
     Networking.exec({
       endpoint: client => client.apis.default.post_posts,
-      meta: {requestBody: {"description": newJobContent, "title": newJobContent}},
-      success: result => setJobs(null)
+      data: {requestBody: {"description": newJobContent, "title": newJobContent}},
+      success: result => loadJobs()
     })
   }
   return (

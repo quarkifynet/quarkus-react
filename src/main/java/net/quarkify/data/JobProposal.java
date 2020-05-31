@@ -3,7 +3,6 @@ package net.quarkify.data;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.json.bind.annotation.JsonbTransient;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +11,7 @@ import javax.persistence.ManyToOne;
 public class JobProposal extends PanacheEntity {
     public String content;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     public User user;
     @JsonbTransient
     @ManyToOne

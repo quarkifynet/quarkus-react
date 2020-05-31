@@ -7,12 +7,14 @@ export default function Job({job, ...props}) {
   const [newJobOfferContent, setNewJobOfferContent] = useState("");
 
   const expandJob = (jobId) => {
-    loadProposals(jobId)
+    if (!expanded) {
+      loadProposals(jobId)
+    }
     setExpanded(!expanded);
   }
   const loadProposals = (jobId) => {
     Networking.exec({
-      endpoint: client => client.apis.default.get_posts__id__proposals,
+      endpoint: client => client.apis.default.getJobProposals,
       attributes: {id: jobId},
       success: result => setProposals(result.body)
     });
@@ -21,10 +23,10 @@ export default function Job({job, ...props}) {
     Networking.exec({
       endpoint: client => client.apis.default.post_posts__id__proposals,
       attributes: {id: jobId},
+      data: {requestBody: {content: newJobOfferContent}},
       success: result => {
         loadProposals(jobId)
       },
-      meta: {requestBody: {content: newJobOfferContent}}
     })
   }
   return <div className="job-container">
@@ -37,8 +39,7 @@ export default function Job({job, ...props}) {
       <input onChange={(e) => setNewJobOfferContent(e.target.value)}></input>
       <button onClick={() => submitNewProposal(job.id)}>Submit Offer</button>
       {
-        proposals && proposals.map(proposal =>
-            <div> Propsal: {proposal.content}</div>)
+        proposals && proposals.map(proposal => <div> Proposal: {proposal.content}</div>)
       }
     </div>}
   </div>
