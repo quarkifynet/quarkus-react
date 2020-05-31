@@ -5,9 +5,9 @@ export default class Networking {
     url: 'http://localhost:8080/openapi'
   });
   // TODO security
-  static exec = (endpoint, object, success, failure = res => console.log('failed on api call: ' + res), meta = {}) => {
+  static exec = ({endpoint, attributes, meta, success, failure = res => console.log('failed on api call: ' + res)}) => {
     this.client.then(
-        client => endpoint(client)(object, meta),
+        client => endpoint(client)(attributes, meta),
         reason => {
           failure(reason);
           console.error('failed to load the spec: ' + reason)
