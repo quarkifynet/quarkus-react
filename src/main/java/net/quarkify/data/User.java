@@ -10,6 +10,8 @@ import java.util.List;
 @Entity
 public class User extends PanacheEntity {
     public String name;
+    public String email;
+    public String password; // Use e.g Bcrypt to encrypt password, don't store it as plain text :)
     @JsonbTransient
     @OneToMany
     public List<JobPost> posts;
