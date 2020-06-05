@@ -25,7 +25,7 @@ export default function Auth({authCallback, ...props}) {
       endpoint: client => client.apis.default.login,
       attributes: {login: login, password: password},
       success: res => {
-        localStorage.setItem("id_token", res.data);
+        localStorage.setItem("id_token", res.data); // store token in local storage
         authCallback()
       },
       failure: res => {
@@ -45,7 +45,7 @@ export default function Auth({authCallback, ...props}) {
     </div>
     {isRegistering && <div>
       Email:
-      <input name="Email" value={email} onChange={(e) => setLogin(e.target.value)}/>
+      <input name="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
     </div>}
     <div>
       Password:

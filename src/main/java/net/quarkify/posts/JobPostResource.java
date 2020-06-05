@@ -3,6 +3,7 @@ package net.quarkify.posts;
 import net.quarkify.data.*;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -24,6 +25,7 @@ public class JobPostResource {
     SecurityContext securityContext;
 
     @POST
+    @RolesAllowed("User")
     @Transactional
     public JobPost submit(JobPost post) {
         final String email = securityContext.getUserPrincipal().getName();
@@ -34,6 +36,7 @@ public class JobPostResource {
 
     @GET
     @Path("/{id}/proposals")
+    @RolesAllowed("User")
     @Operation(operationId = "getJobProposals")
     public List<JobProposal> getAllProposals(@PathParam("id") Long id) {
         return JobProposal.find("job_post_id", id).list();
@@ -41,6 +44,7 @@ public class JobPostResource {
 
     @POST
     @Path("/{id}/proposals")
+    @RolesAllowed("User")
     @Transactional
     public JobProposal submitProposal(@PathParam("id") Long id, JobProposal jobProposal) {
         JobPost jobPost = JobPost.findById(id);
