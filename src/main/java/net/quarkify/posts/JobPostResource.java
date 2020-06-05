@@ -5,7 +5,9 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("/posts")
@@ -18,9 +20,14 @@ public class JobPostResource {
         return JobPost.findAll().list();
     }
 
+    @Context
+    SecurityContext securityContext;
+
     @POST
     @Transactional
     public JobPost submit(JobPost post) {
+        final String email = securityContext.getUserPrincipal().getName();
+        post.user = User.find("email", email).firstResult();
         post.persistAndFlush();
         return post;
     }

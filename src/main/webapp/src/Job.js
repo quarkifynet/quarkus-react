@@ -32,6 +32,7 @@ export default function Job({job, ...props}) {
   return <div className="job-container">
     <div className="job-title">{job.title}</div>
     <div className="job-desc">{job.description}</div>
+    <div className="job-desc">Submitted by: {job.user?.name}</div>
     <button onClick={() => expandJob(job.id)}>Expand</button>
     {expanded &&
     <div>
